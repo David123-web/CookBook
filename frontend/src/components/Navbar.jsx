@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Button } from './ui/button';  // adjust path if needed
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
 
   return (
     <nav className="flex items-center justify-between bg-white px-6 py-4 shadow">
@@ -28,8 +27,8 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <Button variant="ghost" onClick={() => navigate('/login')}>
-              Login
+            <Button className="cursor-pointer" variant="ghost">
+              <Link to="/login">Login</Link>
             </Button>
             <Button asChild>
               <Link to="/signup">Sign Up</Link>

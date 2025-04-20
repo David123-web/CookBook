@@ -16,6 +16,7 @@ export default function ChefDetail() {
       </p>
     );
   }
+
   if (isError) {
     return (
       <p className="text-center py-12 text-red-600">
@@ -24,24 +25,39 @@ export default function ChefDetail() {
     );
   }
 
+  // Derive display fields from the nested shape
+  const name = `${chef.firstName} ${chef.lastName}`;
+  const avatarUrl = chef.profile?.imgUrl
+
+  const bio = chef.profile?.description;
+  const specialty = chef.specialty || chef.profile?.position || '';
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
       {/* Profile header & booking */}
       <div className="flex flex-col lg:flex-row lg:space-x-12">
         <img
-          src={chef.avatar}
-          alt={chef.name}
+          src={avatarUrl}
+          alt={`${name} avatar`}
           className="w-full lg:w-1/3 h-auto rounded-lg object-cover"
         />
 
         <div className="mt-6 lg:mt-0 flex-1">
           <h1 className="text-3xl font-bold text-gray-800">
-            {chef.name}
+            {name}
           </h1>
-          <p className="mt-2 text-gray-600">
-            Specialty: {chef.specialty}
-          </p>
-          <p className="mt-4 text-gray-700">{chef.bio}</p>
+
+          {specialty && (
+            <p className="mt-2 text-gray-600">
+              Specialty: {specialty}
+            </p>
+          )}
+
+          {bio && (
+            <p className="mt-4 text-gray-700">
+              {bio}
+            </p>
+          )}
 
           <div className="mt-8">
             <h2 className="text-2xl font-semibold mb-4">
@@ -69,5 +85,5 @@ export default function ChefDetail() {
         </section>
       </div>
     </div>
-  );
+);
 }

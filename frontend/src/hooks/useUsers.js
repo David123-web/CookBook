@@ -49,12 +49,19 @@ export function useRemoveUserTag() {
 // 4) Update full profile (name, bio, etc.)
 export function useUpdateProfile() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationKey: ['profile', 'update'],
     mutationFn: (profileData) => updateProfileAPI(profileData),
-    onSuccess: (updated) => {
-      // update the 'me' cache so AuthContext stays in sync
-      qc.setQueryData(['me'], updated);
+    onSuccess: ({ updatedUser, updatedProfile }) => {
+      qc.setQueryData(['me'], (old = {}) => ({
+        ...old,
+        ...updatedUser,
+        profile: {
+          ...(old.profile || {}),
+          ...updatedProfile,
+        },
+      }));
     },
   });
 }

@@ -79,7 +79,7 @@ export default function ChefCard({ chef }) {
 
       <div className="p-4 pt-0">
         <Link to={`/chef/${id}`}>
-          <Button className="w-full" variant="primary">
+          <Button className="w-full cursor-pointer" variant="primary">
             View &amp; Book
           </Button>
         </Link>

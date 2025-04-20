@@ -1,14 +1,23 @@
-export async function updateProfileAPI(profileData) {
-  const res = await fetch('/api/users/profile', {
+export async function updateProfileAPI({ userId, profileId, city, yearsOfExperience, hourlyRate, position, description }) {
+  const res = await fetch('api/users/profile', {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     credentials: 'include',
-    body: JSON.stringify(profileData),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId,
+      profileId,
+      city,
+      yearsOfExperience,
+      hourlyRate,
+      position,
+      description,
+    }),
   });
-  if (!res.ok) throw new Error('Error updating profile');
-  return res.json();
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'Update failed');
+  }
+  return res.json(); // { updatedUser, updatedProfile }
 }
 
 // Fetch all tags (for the tag picker)

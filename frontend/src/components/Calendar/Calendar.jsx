@@ -1,90 +1,87 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import moment from 'moment';
 import { Button } from '../ui/button';
 import Header from './Header';
 import Day from './Day';
 
-// Inline buildCalendar for clarity
+/**
+ * Build a 2D array of weeks (each week is an array of 7 moment days)
+ */
 function buildCalendar(date) {
   const start = date.clone().startOf('month').startOf('week');
   const end = date.clone().endOf('month').endOf('week');
-  const d = start.clone().subtract(1, 'day');
+  const day = start.clone().subtract(1, 'day');
   const weeks = [];
-  while (d.isBefore(end, 'day')) {
+
+  while (day.isBefore(end, 'day')) {
     weeks.push(
       Array(7)
         .fill(0)
-        .map(() => d.add(1, 'day').clone())
+        .map(() => day.add(1, 'day').clone())
     );
   }
+
   return weeks;
 }
 
 export default function Calendar({
   selectedDate,
-  onChange = () => {},         // default no‑op
+  onChange,
   availableDates = [],
-  onToggleDate = () => {},     // default no‑op
+  onToggleDate,
 }) {
-  // 1) Local selDate state, initialized once:
-  const [selDate, setSelDate] = useState(() =>
-    moment.isMoment(selectedDate) ? selectedDate : moment()
+  // Ensure we always have a Moment
+  const sel = moment.isMoment(selectedDate) ? selectedDate : moment();
+
+  // Build calendar grid when selected month changes
+  const calendar = useMemo(() => buildCalendar(sel), [sel]);
+
+  // Parse availableDates (YYYY-MM-DD) into local-midnight Moments
+  const availableMoments = useMemo(
+    () => availableDates.map((d) => moment(d, 'YYYY-MM-DD')),
+    [availableDates]
   );
 
-  // 2) Sync selDate only when the prop changes:
-  useEffect(() => {
-    if (moment.isMoment(selectedDate)) {
-      setSelDate(selectedDate);
-    }
-  }, [selectedDate]);
-
-  // 3) Build the calendar when selDate changes:
-  const [calendar, setCalendar] = useState(() => buildCalendar(selDate));
-  useEffect(() => {
-    setCalendar(buildCalendar(selDate));
-  }, [selDate]);
-
-  // Helper: convert any ISO/string days into Moment
-  const availableMoments = availableDates.map((d) =>
-    moment.isMoment(d) ? d : moment(d)
-  );
-
-  const goToday = () => {
-    const today = moment();
-    setSelDate(today);
-    onChange(today);
-  };
+  const goToday = () => onChange(moment());
 
   return (
     <div className="bg-white rounded-lg shadow p-4">
+      {/* Header + Today */}
       <div className="flex items-center justify-between mb-4">
-        <Header selectedDate={selDate} onChange={(m) => { setSelDate(m); onChange(m); }} />
+        <Header
+          selectedDate={sel}
+          onChange={(m) => onChange(m)}
+        />
         <Button variant="outline" size="sm" onClick={goToday}>
           Today
         </Button>
       </div>
 
+      {/* Weekday labels */}
       <div className="flex justify-between text-sm font-medium text-gray-500 mb-2">
-        {['S','M','T','W','T','F','S'].map((d,i) => (
+        {['S','M','T','W','T','F','S'].map((d, i) => (
           <div key={i} className="w-10 text-center">{d}</div>
         ))}
       </div>
 
+      {/* Calendar grid */}
       <div className="space-y-1">
         {calendar.map((week, wi) => (
           <div key={wi} className="flex justify-between">
             {week.map((day, di) => {
+              const iso = day.format('YYYY-MM-DD');
               const isAvail = availableMoments.some((md) =>
-                day.isSame(md, 'day')
+                md.isSame(day, 'day')
               );
-              const isSel = day.isSame(selDate, 'day');
+              const isSel = day.isSame(sel, 'day');
+
               return (
                 <Day
                   key={di}
                   day={day}
                   isAvailable={isAvail}
                   isSelected={isSel}
-                  onClick={() => onToggleDate(day.format('YYYY-MM-DD'))}
+                  onClick={() => onToggleDate(iso)}
                 />
               );
             })}
