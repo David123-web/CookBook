@@ -9,15 +9,19 @@ export default function AvailabilityManager({ initialDates, refreshUser }) {
   const addAvail = useAddAvailability();
   const removeAvail = useRemoveAvailability();
 
+  // ✂ Strip off the time so we only have date‐only strings:
+  const dateOnly = initialDates.map((d) =>
+    typeof d === 'string' ? d.split('T')[0] : moment(d).format('YYYY-MM-DD')
+  );
+
   const handleToggle = (date) => {
-    const dateStr = moment.isMoment(date) ? date.format('YYYY-MM-DD') : date;
-    const isAvail = initialDates.includes(dateStr);
+    const dateStr = typeof date === 'string' ? date : date.format('YYYY-MM-DD');
+    const isAvail = dateOnly.includes(dateStr);
     const action = isAvail ? removeAvail : addAvail;
 
     action.mutate(
       { date: dateStr },
-      {
-        onSuccess: () => {
+      { onSuccess: () => {
           refreshUser();
           setSelectedDate(moment(dateStr));
         },
@@ -32,7 +36,7 @@ export default function AvailabilityManager({ initialDates, refreshUser }) {
       <Calendar
         selectedDate={selectedDate}
         onChange={setSelectedDate}
-        availableDates={initialDates}
+        availableDates={dateOnly}      // ← pass in the date‐only array
         onToggleDate={handleToggle}
       />
 

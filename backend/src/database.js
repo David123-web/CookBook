@@ -339,10 +339,10 @@ const dbOperations = {
       return await prisma.message.findMany({
         where: { recipientUserId: userId },
         include: {
-          user: {
+          sender: {
             select: { id: true, firstName: true, lastName: true, email: true },
           },
-          booking: true,
+          bookings: true,
         },
       });
     } catch (error) {

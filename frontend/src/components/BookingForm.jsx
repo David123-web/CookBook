@@ -41,7 +41,7 @@ export default function BookingForm({ chefId }) {
     e.preventDefault();
     if (!selectedDate) return;
     mutate(
-      { chefId, date: selectedDate.format('YYYY-MM-DD') },
+      { userId: chefId, bookingDate: selectedDate.toISOString()},
       { onSuccess: () => setSelectedDate(null) }
     );
   };
