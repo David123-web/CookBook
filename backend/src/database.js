@@ -75,8 +75,10 @@ const dbOperations = {
     try {
       const user = await prisma.user.findUnique({
         where: { id: parseInt(id) },
+        include: { profile: true },
       });
-      return user;
+      const token = toJWT({ userId: user.id, userType: user.userType });
+      return { token, ...user };
     } catch (error) {
       throw error;
     }

@@ -12,7 +12,10 @@ export function AuthProvider({ children }) {
   const refreshUser = async () => {
     try {
       const res = await fetch('api/me', {
-        credentials: 'include',
+        credentials: 'include', // include cookies for session
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
