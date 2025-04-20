@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 
 // Routes
-app.use(routes);
+app.use("/api", routes);
 
 // Error handling
 app.use(middleware.errorHandler);
