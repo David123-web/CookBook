@@ -15,6 +15,22 @@ router.get("/:id/:userType", async (req, res, next) => {
   }
 });
 
+// POST /bookings
+router.post("/", async (req, res, next) => {
+  const { userId, bookingDate } = req.body;
+  console.log("Received request to create booking:", req.body);
+  if (!bookingDate || !userId) {
+    return res.status(400).send({ message: "Booking date and user ID are required" });
+  }
+
+  try {
+    const newBooking = await db.createBooking(userId, bookingDate);
+    res.status(201).json(newBooking);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /bookings
 router.put("/", async (req, res, next) => {
   const { bookingId, bookingDate, userId } = req.body;

@@ -152,6 +152,28 @@ const dbOperations = {
     }
   },
 
+  createBooking: async (userId, bookingdate) => {
+    try {
+      const existingBooking = await prisma.booking.findFirst({
+        where: { userId: parseInt(userId), date: bookingdate },
+      });
+      if (existingBooking) {
+        throw new Error("Booking already exists");
+      }
+      const newBooking = await prisma.booking.create({
+        data: {
+          userId: parseInt(userId),
+          date: bookingdate,
+          accepted: false,
+          profileId: parseInt(userId),
+        },
+      });
+      return newBooking;
+    } catch (error) {
+      throw error;
+    }
+  },
+
 
   deleteBooking: async (id) => {
     try {
