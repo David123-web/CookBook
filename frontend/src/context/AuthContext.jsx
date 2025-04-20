@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
   // Fetch /me to initialize or refresh current user
   const refreshUser = async () => {
     try {
-      const res = await fetch('/me', {
+      const res = await fetch('api/me', {
         credentials: 'include',
       });
       if (!res.ok) throw new Error();
