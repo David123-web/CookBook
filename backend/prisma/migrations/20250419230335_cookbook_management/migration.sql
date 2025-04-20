@@ -9,7 +9,7 @@ CREATE TABLE "User" (
     "password" TEXT NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
     "address" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
+    "city" TEXT,
     "postalCode" TEXT NOT NULL,
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "isOnline" BOOLEAN NOT NULL DEFAULT false,

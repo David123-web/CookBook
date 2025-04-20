@@ -11,8 +11,8 @@ export function useChefs() {
 
     // mock data for testing
     // queryFn: async () => [
-    //   { id: 1, name: 'Chef Alice', specialty: 'Italian' },
-    //   { id: 2, name: 'Chef Bob',   specialty: 'Sushi'   },
+    //   { id: 1, name: 'Chef Alice', specialty: 'Italian' },
+    //   { id: 2, name: 'Chef Bob',   specialty: 'Sushi'   },
     // ],
     
     staleTime: 5 * 60 * 1000,        // optional: cache for 5 min

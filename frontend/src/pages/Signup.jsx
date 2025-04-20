@@ -7,11 +7,21 @@ export default function Signup() {
   const navigate = useNavigate();
   const { signup } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // form fields
+  const [firstName, setFirstName]     = useState('');
+  const [lastName, setLastName]       = useState('');
+  const [userType, setUserType]       = useState('Booker');
+  const [email, setEmail]             = useState('');
+  const [password, setPassword]       = useState('');
+  const [confirm, setConfirm]         = useState('');
+  const [postalCode, setPostalCode]   = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [address, setAddress]         = useState('');
+  const [city, setCity]               = useState('');
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,78 +31,175 @@ export default function Signup() {
     }
     setLoading(true);
     setError(null);
+
     try {
-      await signup({ email, password });
+      await signup({
+        firstName,
+        lastName,
+        userType,
+        email,
+        password,
+        postalCode,
+        dateOfBirth,
+        businessName,
+        address,
+        city,
+      });
       navigate('/', { replace: true });
     } catch (err) {
-      setError(err.message || 'Signup failed');
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-24 p-6 bg-white shadow rounded">
-      <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+    <div className="max-w-lg mx-auto mt-16 p-6 bg-white shadow rounded space-y-6">
+      <h1 className="text-2xl font-bold text-center">Sign Up</h1>
+      {error && <p className="text-sm text-red-600">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {error && (
-          <p className="text-sm text-red-600">{error}</p>
-        )}
+        {/* Name */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">First Name</label>
+            <input
+              type="text"
+              required
+              value={firstName}
+              onChange={e => setFirstName(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Last Name</label>
+            <input
+              type="text"
+              required
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
+        </div>
 
+        {/* Role & Business */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">I am a</label>
+            <select
+              value={userType}
+              onChange={e => setUserType(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            >
+              <option value="Booker">Booker</option>
+              <option value="Chef">Chef</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Business Name</label>
+            <input
+              type="text"
+              required
+              value={businessName}
+              onChange={e => setBusinessName(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
+        </div>
+
+        {/* Contact & Creds */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
           <input
-            id="email"
             type="email"
             required
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
           />
         </div>
-
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input
+              type="password"
+              required
+              value={confirm}
+              onChange={e => setConfirm(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="confirm" className="block text-sm font-medium text-gray-700">
-            Confirm Password
-          </label>
-          <input
-            id="confirm"
-            type="password"
-            required
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
-          />
+        {/* Address & DOB */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Postal Code</label>
+            <input
+              type="text"
+              required
+              value={postalCode}
+              onChange={e => setPostalCode(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
+            <input
+              type="date"
+              required
+              value={dateOfBirth}
+              onChange={e => setDateOfBirth(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
         </div>
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? 'Signing up…' : 'Sign Up'}
+        {/* Address & City */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Address</label>
+            <input
+              type="text"
+              required
+              value={address}
+              onChange={e => setAddress(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">City</label>
+            <input
+              type="text"
+              required
+              value={city}
+              onChange={e => setCity(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
+            />
+          </div>
+        </div>
+
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? 'Signing up…' : 'Sign Up'}
         </Button>
       </form>
 
-      <p className="mt-4 text-sm text-center text-gray-600">
+      <p className="text-center text-sm text-gray-600">
         Already have an account?{' '}
         <Link to="/login" className="text-primary hover:underline">
           Log In
         </Link>
       </p>
-    </div>
-  );
-}
+    </div>)}

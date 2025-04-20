@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import moment from 'moment';
 import Calendar from './Calendar';
 import { useAddAvailability, useRemoveAvailability } from '../hooks/useAvailability';
 import { Button } from './ui/button';
 
-export default function AvailabilityManager({ initialDates }) {
-  const [selectedDate, setSelectedDate] = useState(null);
+export default function AvailabilityManager({ initialDates, refreshUser }) {
+  const [selectedDate, setSelectedDate] = useState(() => moment());
   const addAvail = useAddAvailability();
   const removeAvail = useRemoveAvailability();
 
   const handleToggle = (date) => {
-    const isAvail = initialDates.includes(date);
+    const dateStr = moment.isMoment(date) ? date.format('YYYY-MM-DD') : date;
+    const isAvail = initialDates.includes(dateStr);
     const action = isAvail ? removeAvail : addAvail;
-    action.mutate({ date });
-  };
 
-  // If the outside `initialDates` changes (e.g. after a mutation), clear any stale selection
-  useEffect(() => {
-    if (selectedDate && !initialDates.includes(selectedDate)) {
-      setSelectedDate(null);
-    }
-  }, [initialDates, selectedDate]);
+    action.mutate(
+      { date: dateStr },
+      {
+        onSuccess: () => {
+          refreshUser();
+          setSelectedDate(moment(dateStr));
+        },
+      }
+    );
+  };
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 shadow rounded space-y-4">
@@ -38,7 +42,9 @@ export default function AvailabilityManager({ initialDates }) {
           onClick={() => handleToggle(selectedDate)}
           disabled={addAvail.isLoading || removeAvail.isLoading}
         >
-          {initialDates.includes(selectedDate) ? 'Remove Date' : 'Add Date'}
+          {initialDates.includes(selectedDate.format('YYYY-MM-DD'))
+            ? 'Remove Date'
+            : 'Add Date'}
         </Button>
       )}
 

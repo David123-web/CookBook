@@ -1,3 +1,4 @@
+const multer = require("multer");
 const express = require("express");
 const router = express.Router();
 const db = require("../database");
@@ -7,6 +8,7 @@ const { cloudinary } = require("../config/cloudinary");
 router.get("/", async (req, res, next) => {
   try {
     const users = await db.getAllChefsWithProfile();
+    console.log(users);
     res.json(users);
   } catch (error) {
     return res.status(400).send({ message: "Unable to fetch users" });
@@ -34,18 +36,39 @@ router.put("/profile", async (req, res, next) => {
 });
 
 // POST /users/profile/upload
-router.post("/profile/upload", async (req, res, next) => {
-  const { data: fileString, userId } = req.body;
-  try {
-    const uploadResponse = await cloudinary.uploader.upload(fileString, {
-      upload_preset: "dev_setups",
-    });
-    await db.updateProfileImage(userId, uploadResponse.url);
-    res.status(200).send("Profile picture uploaded");
-  } catch (error) {
-    res.status(500).json({ message: "Something went wrong, file was not successfully uploaded" });
+const upload = multer({ storage: multer.memoryStorage() });
+
+router.post(
+  '/profile/upload',
+  upload.single('image'),    // Multer parses `multipart/form-data`
+  async (req, res) => {
+    const file = req.file;
+    const userId = req.body.userId;
+
+    if (!file || !userId) {
+      return res.status(400).json({ message: 'No file or userId provided' });
+    }
+
+    try {
+      // build a data URI for Cloudinary
+      const dataUri = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+
+      const uploadResp = await cloudinary.uploader.upload(dataUri, {
+        upload_preset: 'dev_setups',
+      });
+
+      // save the URL in your database
+      await db.updateProfileImage(userId, uploadResp.url);
+
+      return res.status(200).json({ imageUrl: uploadResp.url });
+    } catch (err) {
+      console.error('Upload error:', err);
+      return res
+        .status(500)
+        .json({ message: 'Something went wrong, upload failed' });
+    }
   }
-});
+);
 
 // GET /users/:id/profile/message
 router.get("/:id/profile/message", async (req, res, next) => {
@@ -113,6 +136,7 @@ router.post("/:id/profile/reviews", async (req, res, next) => {
 // POST /users/profile/availability
 router.post("/profile/availability", async (req, res, next) => {
   try {
+    console.log("Received request to add available date:", req.body);
     const availableDate = await db.addAvailableDate(req.body.profileId, req.body.availableDate);
     res.json(availableDate);
   } catch (error) {

@@ -9,8 +9,8 @@ import { useAuth } from '../context/AuthContext';
 export function useBookings() {
   const { user } = useAuth();
   return useQuery({
-    queryKey: ['bookings', user.id, user.type],
-    queryFn: () => fetchBookingsAPI(user.id, user.type),
+    queryKey: ['bookings', user.id, user.userType],
+    queryFn: () => fetchBookingsAPI(user.id, user.userType),
     enabled: !!user,
   });
 }

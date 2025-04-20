@@ -10,7 +10,7 @@ export default function Navbar() {
   return (
     <nav className="flex items-center justify-between bg-white px-6 py-4 shadow">
       <Link to="/" className="text-2xl font-bold text-gray-800">
-        ChefAvailable
+        CookBook
       </Link>
 
       <div className="flex items-center space-x-4">

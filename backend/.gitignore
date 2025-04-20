@@ -1,5 +1,10 @@
 node_modules/
+<<<<<<< Updated upstream
 // .env
 .env
 // .env.local
 .env.example
+=======
+
+.env
+>>>>>>> Stashed changes

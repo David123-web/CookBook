@@ -301,7 +301,7 @@ const dbOperations = {
   updateProfileImage: async (userId, imageUrl) => {
     try {
       const updatedProfile = await prisma.profile.update({
-        where: { userId },
+        where: { userId: parseInt(userId) },
         data: { imgUrl: imageUrl },
       });
       return updatedProfile;

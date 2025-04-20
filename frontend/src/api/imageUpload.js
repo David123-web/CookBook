@@ -1,7 +1,8 @@
-export async function uploadProfileImageAPI(file) {
+export async function uploadProfileImageAPI(file, userId) {
   const formData = new FormData();
   formData.append('image', file);
-  const res = await fetch('/users/profile/upload', {
+  formData.append('userId', userId);
+  const res = await fetch('/api/users/profile/upload', {
     method: 'POST',
     body: formData,
   });

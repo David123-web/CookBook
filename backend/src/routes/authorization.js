@@ -60,6 +60,8 @@ router.post("/signup", async (req, res, next) => {
     });
 
     const token = toJWT({ userId: newUser.id });
+    console.log("Generated token:", token);
+    console.log("New user created:", newUser);
     res.status(201).json({ token, ...newUser });
   } catch (error) {
     if (error.code === 'P2002') {

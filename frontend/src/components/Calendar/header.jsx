@@ -1,37 +1,33 @@
 import React from 'react';
+import moment from 'moment';
 import { Button } from '../ui/button';
 
 export default function Header({ selectedDate, onChange }) {
-  const monthName = selectedDate.format('MMMM');
-  const year = selectedDate.format('YYYY');
+  // if not a Moment, fall back
+  const sel = moment.isMoment(selectedDate) ? selectedDate : moment();
+  const monthName = sel.format('MMMM');
+  const year = sel.format('YYYY');
+  const today = moment();
+  const isCurrent = sel.isSame(today, 'month');
 
-  const goPrev = () => onChange(selectedDate.clone().subtract(1, 'month'));
-  const goNext = () => onChange(selectedDate.clone().add(1, 'month'));
-  const isCurrent = selectedDate.isSame(new Date(), 'month');
+  const goPrev = () => onChange(sel.clone().subtract(1, 'month'));
+  const goNext = () => onChange(sel.clone().add(1, 'month'));
 
   return (
-    <div className="flex items-center justify-between mb-4">
+    <div className="flex items-center space-x-2">
       <Button
         variant="ghost"
         size="icon"
-        disabled={isCurrent}
         onClick={goPrev}
-        className={isCurrent ? 'text-gray-300' : 'text-gray-600 hover:bg-gray-100'}
+        disabled={isCurrent}
       >
-        &laquo;
+        «
       </Button>
-
       <div className="text-lg font-semibold text-gray-800">
         {monthName} {year}
       </div>
-
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={goNext}
-        className="text-gray-600 hover:bg-gray-100"
-      >
-        &raquo;
+      <Button variant="ghost" size="icon" onClick={goNext}>
+        »
       </Button>
     </div>
   );
