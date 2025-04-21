@@ -113,7 +113,7 @@ Modern lifestyles are increasingly fast-paced, leaving many individuals and fami
 
 1.  **Select a Chef:** On the home page, click **View & Book** on your chosen chef’s card. ![Chef Card](CookBook_photos/chef_card.jpg)
     
-2.  **Review Availability:** On the chef’s profile page, review their bio, specialties, and calendar. Available dates are highlighted in green. ![Chef Profile & Calendar](profile&editing.jpg)
+2.  **Review Availability:** On the chef’s profile page, review their bio, specialties, and calendar. Available dates are highlighted in green. ![Chef Profile & Calendar](CookBook_photos/profile&editing.jpg)
     
 3.  **Pick a Date:** Click a green date to select it. Only available dates can be chosen. ![Select Available Date](CookBook_photos/submitbooking.jpg)
     
