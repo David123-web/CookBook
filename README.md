@@ -1,8 +1,8 @@
 # CookBook Final Report
 
 ## Team Information
-- **Zuhao Zhang** (GitHub Username: David123-web) - Email: _davidzhangzuhao@gmail.com_
-- **Lihao Xue** (GitHub Username: Madnessvia) - Email: _xuelihaogpa4@gmail.com_
+- **Zuhao Zhang 1005828080** (GitHub Username: David123-web) - Email: _davidzhangzuhao@gmail.com_
+- **Lihao Xue 1011809875** (GitHub Username: Madnessvia) - Email: _xuelihaogpa4@gmail.com_
 
 ## Motivation
 
@@ -22,28 +22,31 @@ Modern lifestyles are increasingly fast-paced, leaving many individuals and fami
 - **Frontend:** React (Vite), React Router, React Query, Tailwind CSS, shadcn/ui
 - **Backend:** Express.js server with RESTful API
 - **Database:** PostgreSQL managed via Prisma ORM
-- **File / Media Storage:** Cloudinary for chef profile images and meal photos
+- **File / Media Storage:** Cloudinary for chef profile images
 - **Authentication / Authorization:** Passwords hashed with bcrypt, JWT for session tokens
 
 ## Features
 
 1. **User Authentication**
-   - Role-based signup (Chef or Customer) with secure password hashing (bcrypt)
+   - Role-based signup (Chef or User) with secure password hashing (bcrypt)
    - JWT-based tokens for authenticated requests
-2. **Chef Profiles**
+2. **Cloud Storage for Profile Photos**
+   - Utilize Cloudinary for profile photo storage
+3. **Chef Profiles**
    - Profile creation: bio, specialties, hourly rate, and availability calendar
    - Image upload via Cloudinary
    - Public reviews and ratings display
-3. **Browsing & Booking**
+4. **Browsing & Booking**
    - Browse a list of available chefs with basic details
-   - Booking requests with date/time selection and special requests field
-   - In-app notifications on booking status changes
-4. **Review System**
+   - Booking requests with date/time selection
+5. **Review System**
    - Post-service star rating (1–5) and comment box
    - Chef public responses to reviews
+6. **Message Box**  
+   - Messaging functionality between Chef and User 
+   - Message history rendered real-time
 
-*These features align with course requirements by demonstrating full-stack development, secure auth, database interactions, and file storage management.* with course requirements by demonstrating full-stack development, secure auth, database interactions, and file storage management.\*
-
+*These features align with course requirements by demonstrating full-stack development, secure auth, database interactions, and file storage management.*
 ## User Guide
 
 1. **Signup/Login**
@@ -190,17 +193,17 @@ Modern lifestyles are increasingly fast-paced, leaving many individuals and fami
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/<your-org>/cookbook.git
-   cd cookbook
+   git clone https://github.com/David123-web/CookBook
+   cd CookBook/backend
    ```
 2. **Copy environment template**
    ```bash
    cp .env.example .env
    ```
-3. **Configure **``** variables**
+3. **Configure **`.env`** variables**
    ```dotenv
-   DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB_NAME
-   JWT_SECRET=your_jwt_secret
+   DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB_NAME   // Your database URL
+   JWT_SECRET=your_jwt_secret                                  // anything is good here
    CLOUDINARY_NAME=your_cloud_name
    CLOUDINARY_API_KEY=your_api_key
    CLOUDINARY_API_SECRET=your_api_secret
@@ -208,6 +211,8 @@ Modern lifestyles are increasingly fast-paced, leaving many individuals and fami
 
 ### Database Initialization
 ```bash
+cd CookBook/backend
+
 # Create a new PostgreSQL database named 'cookbook_management'
 createdb cookbook_management
 
@@ -228,32 +233,20 @@ npx prisma migrate dev --name init
    CLOUDINARY_NAME=your_cloud_name
    CLOUDINARY_API_KEY=your_api_key
    CLOUDINARY_API_SECRET=your_api_secret
-   UPLOAD_PRESET=dev_setups
    ```
 5. **Redeploy your backend**: After updating `.env`, restart or redeploy your server. The `upload_preset: "dev_setups"` setting will now be recognized for image uploads.
 
 ### Running Locally
 ```bash
-# Install dependencies
+# Install dependencies and run in development mode
+cd CookBook/backend
 npm install
-
-# Run backend in development mode
 npm run dev
 
-# Run frontend in development mode
+cd CookBook/frontend
+npm install
 npm run dev
 ```
-
-### Testing
-
-- **Unit Tests:** `npm run test` (backend and frontend)
-- **Linting / Formatting:** `npm run lint` / `npm run format`
-
-## Deployment Information
-
-- **Live URL:** [*https://cookbook-app.example.com*](https://cookbook-app.example.com)
-- **Platform:** Vercel (frontend) and Heroku (backend)
-- Environment variables are configured in each platform’s settings.
 
 ## Individual Contributions
 
@@ -283,4 +276,3 @@ Moving forward, potential enhancements include payment integration, user messagi
 ---
 
 *Thank you for reviewing our project!*
-
