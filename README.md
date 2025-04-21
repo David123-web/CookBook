@@ -117,7 +117,7 @@ Modern lifestyles are increasingly fast-paced, leaving many individuals and fami
     
 3.  **Pick a Date:** Click a green date to select it. Only available dates can be chosen. ![Select Available Date](CookBook_photos/submitbooking.jpg)
     
-4.  **Message the Chef:** Navigate to **Messages** to chat with the chef and finalize the exact time and location. ![Messaging Chef](CookBook/messages&reviews.jpg)
+4.  **Message the Chef:** Navigate to **Messages** to chat with the chef and finalize the exact time and location. ![Messaging Chef](CookBook_photos/messages&reviews.jpg)
     
 
 ### Scenario: Chef Manages Availability
@@ -133,7 +133,7 @@ Modern lifestyles are increasingly fast-paced, leaving many individuals and fami
 5.  **Verify on Home Page:** Log out or switch to a Customer view; the updated availability will be reflected on your chef card calendar highlights.
     
 
-![Chef Profile & Editing](profile&editing.jpg)
+![Chef Profile & Editing](CookBook_photos/profile&editing.jpg)
 
 ### Scenario: Viewing Bookings
 
