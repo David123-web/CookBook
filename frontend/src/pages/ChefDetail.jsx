@@ -31,6 +31,8 @@ export default function ChefDetail() {
 
   const bio = chef.profile?.description;
   const specialty = chef.specialty || chef.profile?.position || '';
+  const yearsOfExperience = chef.profile?.yearsOfExperience || 0;
+  const hourlyRate = chef.profile?.hourlyRate || 0;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
@@ -53,6 +55,18 @@ export default function ChefDetail() {
             </p>
           )}
 
+          {yearsOfExperience > 0 && (
+            <p className="mt-2 text-gray-600">
+              Years of Experience: {yearsOfExperience}
+            </p>
+          )}
+
+          {hourlyRate > 0 && (
+            <p className="mt-2 text-gray-600">
+              Hourly Rate: ${hourlyRate.toFixed(2)}
+            </p>
+          )}
+          
           {bio && (
             <p className="mt-4 text-gray-700">
               {bio}

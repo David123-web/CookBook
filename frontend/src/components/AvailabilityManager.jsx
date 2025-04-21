@@ -68,6 +68,9 @@ export default function AvailabilityManager({ initialDates, refreshUser }) {
           Error: {(addAvail.error || removeAvail.error).message}
         </p>
       )}
+      {addAvail.isSuccess && (
+        <p className="text-sm text-green-600">Date added successfully!</p>
+      )}
     </div>
   );
 }

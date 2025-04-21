@@ -128,6 +128,9 @@ export default function Profile() {
         {updateProfile.isError && (
           <p className="text-sm text-red-600">Error: {updateProfile.error.message}</p>
         )}
+        {updateProfile.isSuccess && (
+          <p className="text-sm text-green-600">Profile updated successfully!</p>
+        )}
       </section>
 
       {/* Availability manager */}
@@ -136,42 +139,6 @@ export default function Profile() {
         <AvailabilityManager initialDates={availDates} refreshUser={refreshUser} />
       </section>
 
-      {/* Tags */}
-      <section>
-        <h2 className="text-xl font-semibold mb-2">Your Tags</h2>
-
-        {/* Existing tags */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((t) => (
-            <div key={t.id} className="flex items-center bg-gray-200 rounded-full px-3 py-1">
-              <span className="text-sm text-gray-800">{t.name}</span>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="ml-1"
-                onClick={() =>
-                  removeTag.mutate({ userTagId: t.id, profileId: profile.id }, { onSuccess: () => refreshUser() })
-                }
-              >
-                ×
-              </Button>
-            </div>
-          ))}
-        </div>
-
-        <select
-          onChange={handleAddTag}
-          defaultValue=""
-          className="rounded-md border-gray-300 shadow-sm focus:ring focus:ring-primary"
-        >
-          <option value="">Add a tag…</option>
-          {allTags.map((t) => (
-            <option key={t.id} value={t.name}>
-              {t.name}
-            </option>
-          ))}
-        </select>
-      </section>
     </div>
   );
 }
