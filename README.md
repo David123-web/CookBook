@@ -70,6 +70,113 @@ Modern lifestyles are increasingly fast-paced, leaving many individuals and fami
 
    - After a completed booking, navigate to **Bookings → Past** and click **Review**.
    - Submit star rating and comments; chefs can reply publicly.&#x20;
+  
+
+### Scenario: Browsing Chefs
+
+1.  **Visit Home Page:** Open the application root (`/`) to see all available chefs displayed as cards.
+    
+2.  **Explore Chef Cards:** Each card presents the chef’s photo, name, location, and average rating.
+    
+3.  **View & Book:** Click **View & Book** on any card to view full profile details and initiate a booking.
+    
+
+![Homepage](CookBook_photos/homepage.jpg)
+
+
+### Scenario: User Signup
+
+1.  On the top right corner of the **CookBook** homepage, click the **Sign Up** button.
+    
+2.  On the signup form, enter your **Name**, **Email**, and **Password**.
+    
+3.  **Select your role**:
+    
+    -   **Chef**: Your profile will become a card on the home page that customers can view and book.
+        
+    -   **Customer**: You can browse chef cards and request bookings.
+        
+4.  (Optional) Upload a profile picture or leave the default avatar.
+    
+5.  Click **Sign Up** to create your account.
+    
+6.  Upon successful registration:
+    
+    -   **Chefs** are redirected to their profile page, where they can edit their bio, specialties, pricing, and availability.
+        
+    -   **Customers** are redirected to the home page to browse and book chefs.
+        
+
+![Signup Page](CookBook_photos/signuppage.jpg)
+
+### Scenario: Booking a Chef
+
+1.  **Select a Chef:** On the home page, click **View & Book** on your chosen chef’s card. ![Chef Card](CookBook_photos/chef_card.jpg)
+    
+2.  **Review Availability:** On the chef’s profile page, review their bio, specialties, and calendar. Available dates are highlighted in green. ![Chef Profile & Calendar](profile&editing.jpg)
+    
+3.  **Pick a Date:** Click a green date to select it. Only available dates can be chosen. ![Select Available Date](CookBook_photos/submitbooking.jpg)
+    
+4.  **Message the Chef:** Navigate to **Messages** to chat with the chef and finalize the exact time and location. ![Messaging Chef](CookBook/messages&reviews.jpg)
+    
+
+### Scenario: Chef Manages Availability
+
+1.  **Log in as a Chef:** Access your account and click on your profile icon in the top-right corner.
+    
+2.  **Edit Your Profile:** Select **Edit Profile** to open the profile editor.
+    
+3.  **Set Available Dates:** In the availability calendar, click on dates to toggle availability (green = available, gray = unavailable).
+    
+4.  **Save Changes:** Click **Save Profile** to submit your availability updates.
+    
+5.  **Verify on Home Page:** Log out or switch to a Customer view; the updated availability will be reflected on your chef card calendar highlights.
+    
+
+![Chef Profile & Editing](profile&editing.jpg)
+
+### Scenario: Viewing Bookings
+
+-   **For Customers:**
+    
+    1.  After requesting a booking, click the **Bookings** tab in the navigation bar.
+        
+    2.  Under **Pending**, find your request with the chef’s name, date, and status.
+        
+    3.  Under **Past**, review completed bookings and leave reviews if desired.
+        
+-   **For Chefs:**
+    
+    1.  Log in and click the **Bookings** tab.
+        
+    2.  Under **Pending**, accept or decline new booking requests.
+        
+    3.  Under **Upcoming**, view confirmed upcoming services.
+        
+    4.  Under **Completed**, see past bookings and respond to customer reviews.
+        
+
+![View Bookings](CookBook_photos/loginaschef&andviewbookings.jpg)
+
+### Scenario: Submitting a Review
+
+1.  **Log back in as a Customer** and navigate to the **Bookings** tab.
+    
+2.  Under **Past**, locate the completed booking you want to review and click **Review**.
+    
+3.  In the **Review Form**, select a star rating (1–5) and enter your comments.
+    
+4.  Click **Submit Review** to save your feedback.
+    
+5.  Refresh the **Chef’s Profile** or return to the home page to see:
+    
+    -   The new review in the **Reviews** list.
+        
+    -   The updated overall star rating is displayed on the chef’s card.
+        
+
+![Write and Submit Review](CookBook_photos/message&reviews2.jpg)
+
 
 ## Development Guide
 
