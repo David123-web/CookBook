@@ -1,8 +1,8 @@
 # CookBook Final Report
 
 ## Team Information
-- **Zuhao Zhang** (Student #: 1005828080) - Email: _davidzhangzuhao@gmail.com_
-- **Lihao Xue** (Student #: 1011809875) - Email: _xuelihaogpa4@gmail.com_
+- **Zuhao Zhang** (GitHub Username: David123-web) - Email: _davidzhangzuhao@gmail.com_
+- **Lihao Xue** (GitHub Username: Madnessvia) - Email: _xuelihaogpa4@gmail.com_
 
 ## Motivation
 
@@ -150,12 +150,12 @@ npm run dev
 
 ## Individual Contributions
 
-- **Zuhao Zhang**
+- **Lihao Xue**
   - Frontend architecture and UI/UX design
   - Authentication flows and role-based routing
   - Chef profile editor and calendar availability component
   - Screenshots and user guide documentation
-- **Lihao Xue**
+- **Zuhao Zhang**
   - Express.js API design and implementation
   - PostgreSQL schema with Prisma and database migrations
   - Cloudinary media integration and file upload endpoints
