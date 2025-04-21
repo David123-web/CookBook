@@ -7,7 +7,7 @@ export async function fetchBookingsAPI(userId, userType) {
   return res.json();
 }
 
-// Create a booking (old app used PUT)
+// Create a booking
 export async function createBookingAPI(data) {
   const res = await fetch('/api/bookings', {
     method: 'POST',

@@ -39,7 +39,7 @@ export default function Bookings() {
                   Date Received
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {user.userType === 'Chef' ? 'Booker' : 'Chef Booked'}
+                  {user.userType === 'Chef' ? 'User' : 'Chef Booked'}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Company

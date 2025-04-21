@@ -37,10 +37,10 @@ export default function ReviewList({ chefId }) {
                 {'☆'.repeat(5 - r.reviewScore)}
               </span>
               <span className="ml-2 text-sm text-gray-600">
-                {new Date(r.date).toLocaleDateString()}
+                {new Date(r.createdAt).toLocaleDateString()}
               </span>
             </div>
-            {r.comment && <p className="text-gray-700">{r.comment}</p>}
+            {r.content && <p className="text-gray-700">{r.content}</p>}
           </li>
         ))}
       </ul>

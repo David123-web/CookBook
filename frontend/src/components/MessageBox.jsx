@@ -40,7 +40,7 @@ export default function MessageBox({ chefId }) {
               className="flex justify-between items-start bg-gray-50 p-3 rounded"
             >
               <div>
-                <p className="text-sm text-gray-700">{msg.content}</p>
+                <p className="text-sm text-gray-700">{msg.sender.firstName} {msg.sender.lastName}: {msg.content}</p>
                 <p className="mt-1 text-xs text-gray-500">
                   {new Date(msg.date).toLocaleString()}
                 </p>

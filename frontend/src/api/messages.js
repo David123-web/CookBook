@@ -3,15 +3,29 @@ export async function fetchMessagesAPI(chefId) {
     if (!res.ok) throw new Error('Error fetching messages');
     return res.json();
   }
-export async function createMessageAPI(chefId, content) {
+
+export async function createMessageAPI(chefId, content, userId) {
   const res = await fetch(`/api/users/${chefId}/profile/message`, {
     method: 'POST',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content }),
+    body: JSON.stringify({
+      title: '',                      // or derive one if you like
+      content,
+      recipientUserId: chefId,        // backend uses this
+      date: new Date().toISOString(), // iso timestamp
+      isReply: false,                 // or true if replying
+      userId,
+    }),
   });
-  if (!res.ok) throw new Error('Error sending message');
-  return res.json();
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'Error sending message');
+  }
+  const { newMessage } = await res.json();
+  return newMessage;
 }
+
 export async function deleteMessageAPI(chefId, messageId) {
   const res = await fetch(`/api/users/${chefId}/profile/message/${messageId}`, {
     method: 'DELETE',

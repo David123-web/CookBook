@@ -11,15 +11,14 @@ export default function ChefCard({ chef }) {
     city,
     profile = {},    // nested profile, if present
     tags = [],
-    reviews = [],
   } = chef;
 
   // Prefer top‑level avatar, then nested profile.imgUrl, then a default
   const avatarUrl = profile.imgUrl
 
   // Compute average review score
-  const total = reviews.reduce((sum, r) => sum + (r.reviewScore || 0), 0);
-  const avg = reviews.length ? total / reviews.length : null;
+  const total = profile.reviews.reduce((sum, r) => sum + (r.reviewScore || 0), 0);
+  const avg = profile.reviews.length ? total / profile.reviews.length : null;
   const rounded = avg ? Math.round(avg) : 0;
 
   return (

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchReviewsAPI, createReviewAPI } from '../api/reviews';
+import { useAuth } from '../context/AuthContext';
 
 export function useReviews(chefId) {
   return useQuery({
@@ -12,11 +13,11 @@ export function useReviews(chefId) {
 
 export function useCreateReview(chefId) {
   const queryClient = useQueryClient();
-
+  const { user } = useAuth();
   return useMutation({
     mutationKey: ['reviews', chefId, 'create'],
     mutationFn: ({ rating, comment }) =>
-      createReviewAPI(chefId, rating, comment),
+      createReviewAPI(chefId, rating, comment, user.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reviews', chefId] });
     },

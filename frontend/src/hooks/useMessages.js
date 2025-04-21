@@ -5,6 +5,7 @@ import {
   deleteMessageAPI,
   updateMessageAPI,
 } from '../api/messages';
+import { useAuth } from '../context/AuthContext';
 
 export function useMessages(chefId) {
   return useQuery({
@@ -17,9 +18,10 @@ export function useMessages(chefId) {
 
 export function useCreateMessage(chefId) {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
   return useMutation({
     mutationKey: ['messages', chefId, 'create'],
-    mutationFn: (content) => createMessageAPI(chefId, content),
+    mutationFn: (content) => createMessageAPI(chefId, content, user.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['messages', chefId] });
     },
