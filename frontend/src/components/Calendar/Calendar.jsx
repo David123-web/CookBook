@@ -42,7 +42,10 @@ export default function Calendar({
     [availableDates]
   );
 
-  const goToday = () => onChange(moment());
+  const goToday = (e) => {
+    e.preventDefault();
+    onChange(moment());
+  }
 
   return (
     <div className="bg-white rounded-lg shadow p-4">
@@ -52,7 +55,7 @@ export default function Calendar({
           selectedDate={sel}
           onChange={(m) => onChange(m)}
         />
-        <Button variant="outline" size="sm" onClick={goToday}>
+        <Button type="button" variant="outline" size="sm" onClick={goToday}>
           Today
         </Button>
       </div>

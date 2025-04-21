@@ -3,7 +3,9 @@ import React from 'react';
 export default function Day({ day, isAvailable, isSelected, onClick }) {
   return (
     <div
-      onClick={() => onClick(day)}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(day)}}
       title="Toggle availability"
       className={`
         flex items-center justify-center 

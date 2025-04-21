@@ -25,13 +25,19 @@ export default function BookingForm({ chefId }) {
   }
 
   // Pull ISO dates out of chef.profile.availableDates
-  const availDates = (chef.profile?.availableDates || []).map((d) =>
-    typeof d === 'string' ? d : d.date
-  );
+  const availDates = (chef.profile?.availableDates || []).map((d) => {
+    // d might be a raw ISO string, a Date object, or { date: ISOString }
+    const raw = typeof d === 'string'
+      ? d
+      : d.date ||                  // if your DB is returning { date: ... }
+        d;                         // fallback in case it's already a Date
+    return moment(raw).format("YYYY-MM-DD");
+  });
 
   // Only allow clicks on truly available dates
   const handleDateClick = (day) => {
     const iso = moment.isMoment(day) ? day.format('YYYY-MM-DD') : day;
+
     if (availDates.includes(iso)) {
       setSelectedDate(moment(iso));
     }

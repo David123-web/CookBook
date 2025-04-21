@@ -14,20 +14,30 @@ export default function AvailabilityManager({ initialDates, refreshUser }) {
     typeof d === 'string' ? d.split('T')[0] : moment(d).format('YYYY-MM-DD')
   );
 
-  const handleToggle = (date) => {
-    const dateStr = typeof date === 'string' ? date : date.format('YYYY-MM-DD');
-    const isAvail = dateOnly.includes(dateStr);
-    const action = isAvail ? removeAvail : addAvail;
-
-    action.mutate(
-      { date: dateStr },
-      { onSuccess: () => {
-          refreshUser();
-          setSelectedDate(moment(dateStr));
-        },
-      }
-    );
+   // Only select the date—no network call
+  const handleSelectDate = (date) => {
+      const dateStr = typeof date === 'string'
+        ? date
+        : date.format('YYYY-MM-DD');
+      setSelectedDate(moment(dateStr));
   };
+  
+    // This is the one that actually sends the request
+  const handleSubmit = () => {
+      const dateStr = selectedDate.format('YYYY-MM-DD');
+      const isAvail = dateOnly.includes(dateStr);
+      const action = isAvail ? removeAvail : addAvail;
+      action.mutate(
+        { date: dateStr },
+        {
+          onSuccess: () => {
+            refreshUser();
+            // re‑select the date so UI stays in sync
+            setSelectedDate(moment(dateStr));
+          },
+        }
+      );
+    };
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 shadow rounded space-y-4">
@@ -37,18 +47,19 @@ export default function AvailabilityManager({ initialDates, refreshUser }) {
         selectedDate={selectedDate}
         onChange={setSelectedDate}
         availableDates={dateOnly}      // ← pass in the date‐only array
-        onToggleDate={handleToggle}
+        onToggleDate={handleSelectDate}
       />
 
       {selectedDate && (
         <Button
+          type="button"
           className="w-full"
-          onClick={() => handleToggle(selectedDate)}
+          onClick={handleSubmit}
           disabled={addAvail.isLoading || removeAvail.isLoading}
         >
-          {initialDates.includes(selectedDate.format('YYYY-MM-DD'))
+          {dateOnly.includes(selectedDate.format('YYYY-MM-DD'))
             ? 'Remove Date'
-            : 'Add Date'}
+             : 'Add Date'}
         </Button>
       )}
 
